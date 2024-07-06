@@ -1,0 +1,7 @@
+<div class="field">
+  <div *ngFor="let row of field; let rowIndex = index">
+    <div *ngFor="let item of row; let colIndex = index">
+      <div class="square">{{ rowIndex + "," + colIndex }}</div>
+    </div>
+  </div>
+</div>
