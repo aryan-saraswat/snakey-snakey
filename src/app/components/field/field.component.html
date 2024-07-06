@@ -1,7 +1,8 @@
 <div class="field">
   <div *ngFor="let row of field; let rowIndex = index">
-    <div *ngFor="let item of row; let colIndex = index">
-      <div class="square">{{ rowIndex + "," + colIndex }}</div>
+    <div *ngFor="let square of row; let colIndex = index">
+      <div class="{{ getClass(square) }}">{{ square.position.y }}</div>
     </div>
   </div>
 </div>
+<button (click)="onClick()">Click</button>

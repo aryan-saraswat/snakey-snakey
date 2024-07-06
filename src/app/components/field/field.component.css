@@ -14,3 +14,7 @@
     border: solid 1px black;
     font-size: 15px;
 }
+
+.square.occupied {
+    background-color: black;
+}
