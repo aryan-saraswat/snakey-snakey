@@ -1,7 +1,9 @@
 <div class="field">
   <div *ngFor="let row of field; let rowIndex = index">
     <div *ngFor="let square of row; let colIndex = index">
-      <div class="{{ getClass(square) }}">{{ square.position.y }}</div>
+      <div class="{{ getClass(square) }}">
+        {{ [square.position.x, square.position.y] }}
+      </div>
     </div>
   </div>
 </div>

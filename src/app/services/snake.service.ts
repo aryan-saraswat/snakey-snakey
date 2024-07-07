@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { Direction, Snake } from '../types';
+import { Coordinates, Direction, Snake } from '../types';
 
 @Injectable({
   providedIn: 'root',
@@ -29,26 +29,40 @@ export class SnakeService {
   }
 
   moveSnake() {
-    let updatedSnake = this.snake$.value;
-    updatedSnake.forEach((square) => {
-      switch (this.direction$.value) {
-        case Direction.UP:
-          square.y -= 1;
-          break;
-        case Direction.DOWN:
-          square.y += 1;
-          break;
-        case Direction.LEFT:
-          square.x -= 1;
-          break;
-        case Direction.RIGHT:
-          square.x += 1;
-          break;
-        default:
-          alert('snakey has esacped 2 dimensional world');
-          break;
-      }
-    });
+    let currentSnake = this.snake$.value;
+    let updatedSnake: Snake = [];
+    console.log('snake before update: ', currentSnake);
+
+    const head: Coordinates = {
+      x: currentSnake[0].x,
+      y: currentSnake[0].y,
+    };
+
+    switch (this.direction$.value) {
+      case Direction.UP:
+        head.y -= 1;
+        break;
+      case Direction.DOWN:
+        head.y += 1;
+        break;
+      case Direction.LEFT:
+        head.x -= 1;
+        break;
+      case Direction.RIGHT:
+        head.x += 1;
+        break;
+      default:
+        alert('snakey has escaped 2 dimensional world');
+        break;
+    }
+
+    updatedSnake.push(head);
+
+    for (let i = 1; i < currentSnake.length; i++) {
+      const previousSegment = currentSnake[i - 1];
+      updatedSnake.push(previousSegment);
+    }
+
     this.snake$.next(updatedSnake);
   }
 
