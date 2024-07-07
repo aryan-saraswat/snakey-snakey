@@ -31,7 +31,6 @@ export class SnakeService {
   moveSnake() {
     let currentSnake = this.snake$.value;
     let updatedSnake: Snake = [];
-    console.log('snake before update: ', currentSnake);
 
     const head: Coordinates = {
       x: currentSnake[0].x,
