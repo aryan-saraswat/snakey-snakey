@@ -31,7 +31,23 @@ export class SnakeService {
   moveSnake() {
     let updatedSnake = this.snake$.value;
     updatedSnake.forEach((square) => {
-      square.x += 1;
+      switch (this.direction$.value) {
+        case Direction.UP:
+          square.y -= 1;
+          break;
+        case Direction.DOWN:
+          square.y += 1;
+          break;
+        case Direction.LEFT:
+          square.x -= 1;
+          break;
+        case Direction.RIGHT:
+          square.x += 1;
+          break;
+        default:
+          alert('snakey has esacped 2 dimensional world');
+          break;
+      }
     });
     this.snake$.next(updatedSnake);
   }

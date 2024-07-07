@@ -1,8 +1,7 @@
 import { NgFor } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
 import { SnakeService } from '../../services/snake.service';
-import { Snake, Square } from '../../types';
+import { Direction, Snake, Square } from '../../types';
 
 @Component({
   selector: 'app-field',
@@ -14,7 +13,6 @@ import { Snake, Square } from '../../types';
 export class FieldComponent implements OnInit, OnDestroy {
   size = 20;
   field: Square[][] = [];
-  snake$ = new BehaviorSubject<Snake>([]);
   moveInterval: NodeJS.Timeout | undefined;
 
   constructor(private snakeService: SnakeService) {
@@ -27,6 +25,31 @@ export class FieldComponent implements OnInit, OnDestroy {
       console.log(occupiedSquares);
       this.updateField(occupiedSquares);
     });
+    window.addEventListener('keyup', (event) => {
+      this.handleDirectionChange(event.key);
+    });
+  }
+
+  handleDirectionChange(pressedKey: string) {
+    let nextDirection = this.snakeService.getDirection().value;
+    switch (pressedKey) {
+      case 'ArrowLeft':
+        nextDirection = Direction.LEFT;
+        break;
+      case 'ArrowRight':
+        nextDirection = Direction.RIGHT;
+        break;
+      case 'ArrowUp':
+        nextDirection = Direction.UP;
+        break;
+      case 'ArrowDown':
+        nextDirection = Direction.DOWN;
+        break;
+      default:
+        console.log('going nowhere');
+        break;
+    }
+    this.snakeService.getDirection().next(nextDirection);
   }
 
   initialiseField() {
@@ -67,7 +90,7 @@ export class FieldComponent implements OnInit, OnDestroy {
     this.moveInterval = setInterval(() => {
       console.log('in timeout');
       this.snakeService.moveSnake();
-    }, 1000);
+    }, 500);
   }
 
   onStopMoveClick() {
