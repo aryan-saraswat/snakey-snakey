@@ -1,17 +1,22 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { Snake } from '../types';
+import { Direction, Snake } from '../types';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SnakeService {
   snake$ = new BehaviorSubject<Snake>([{ x: 9, y: 10 }]);
+  direction$ = new BehaviorSubject<Direction>(Direction.RIGHT);
 
   constructor() {}
 
   getSnake() {
     return this.snake$;
+  }
+
+  getDirection() {
+    return this.direction$;
   }
 
   addToSnake() {
@@ -21,5 +26,13 @@ export class SnakeService {
       { x: currentEnd.x - 1, y: currentEnd.y },
     ];
     this.snake$.next(nextSnake);
+  }
+
+  moveSnake() {
+    let updatedSnake = this.snake$.value;
+    updatedSnake.forEach((square) => {
+      square.x += 1;
+    });
+    this.snake$.next(updatedSnake);
   }
 }
