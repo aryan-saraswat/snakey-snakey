@@ -22,7 +22,6 @@ export class FieldComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     console.log('in oninit');
     this.snakeService.getSnake().subscribe((occupiedSquares) => {
-      console.log(occupiedSquares);
       this.updateField(occupiedSquares);
     });
     window.addEventListener('keyup', (event) => {
@@ -56,6 +55,7 @@ export class FieldComponent implements OnInit, OnDestroy {
       });
     } else {
       alert('snake reached boundary???');
+      x;
     }
   }
 
@@ -63,17 +63,16 @@ export class FieldComponent implements OnInit, OnDestroy {
     return `square ${square.occupied ? 'occupied' : ''}`;
   }
 
-  onMoveClick() {
+  onStartGameClick() {
     // only for debugging
     this.moveInterval = setInterval(() => {
-      console.log('in timeout');
       this.snakeService.moveSnake();
     }, 500);
   }
 
-  onStopMoveClick() {
+  onPauseGameClick() {
     console.log('stopping timeout: ', this.moveInterval);
-    clearTimeout(this.moveInterval);
+    clearInterval(this.moveInterval);
   }
 
   onAddClick() {
