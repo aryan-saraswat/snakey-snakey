@@ -55,7 +55,6 @@ export class FieldComponent implements OnInit, OnDestroy {
       });
     } else {
       alert('snake reached boundary???');
-      x;
     }
   }
 
