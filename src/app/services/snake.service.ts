@@ -51,4 +51,29 @@ export class SnakeService {
     });
     this.snake$.next(updatedSnake);
   }
+
+  handleDirectionChange(pressedKey: string) {
+    let currentDirection = this.direction$.value;
+    let nextDirection = currentDirection;
+    switch (pressedKey) {
+      case 'ArrowLeft':
+        if (currentDirection !== Direction.RIGHT)
+          nextDirection = Direction.LEFT;
+        break;
+      case 'ArrowRight':
+        if (currentDirection !== Direction.LEFT)
+          nextDirection = Direction.RIGHT;
+        break;
+      case 'ArrowUp':
+        if (currentDirection !== Direction.DOWN) nextDirection = Direction.UP;
+        break;
+      case 'ArrowDown':
+        if (currentDirection !== Direction.UP) nextDirection = Direction.DOWN;
+        break;
+      default:
+        console.log('going nowhere');
+        break;
+    }
+    this.direction$.next(nextDirection);
+  }
 }

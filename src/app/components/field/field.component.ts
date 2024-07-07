@@ -1,7 +1,7 @@
 import { NgFor } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { SnakeService } from '../../services/snake.service';
-import { Direction, Snake, Square } from '../../types';
+import { Snake, Square } from '../../types';
 
 @Component({
   selector: 'app-field',
@@ -26,33 +26,8 @@ export class FieldComponent implements OnInit, OnDestroy {
       this.updateField(occupiedSquares);
     });
     window.addEventListener('keyup', (event) => {
-      this.handleDirectionChange(event.key);
+      this.snakeService.handleDirectionChange(event.key);
     });
-  }
-
-  handleDirectionChange(pressedKey: string) {
-    let currentDirection = this.snakeService.getDirection().value;
-    let nextDirection = currentDirection;
-    switch (pressedKey) {
-      case 'ArrowLeft':
-        if (currentDirection !== Direction.RIGHT)
-          nextDirection = Direction.LEFT;
-        break;
-      case 'ArrowRight':
-        if (currentDirection !== Direction.LEFT)
-          nextDirection = Direction.RIGHT;
-        break;
-      case 'ArrowUp':
-        if (currentDirection !== Direction.DOWN) nextDirection = Direction.UP;
-        break;
-      case 'ArrowDown':
-        if (currentDirection !== Direction.UP) nextDirection = Direction.DOWN;
-        break;
-      default:
-        console.log('going nowhere');
-        break;
-    }
-    this.snakeService.getDirection().next(nextDirection);
   }
 
   initialiseField() {
