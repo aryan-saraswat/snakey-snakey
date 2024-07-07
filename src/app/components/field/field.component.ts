@@ -64,14 +64,16 @@ export class FieldComponent implements OnInit, OnDestroy {
 
   onStartGameClick() {
     // only for debugging
-    this.moveInterval = setInterval(() => {
-      this.snakeService.moveSnake();
-    }, 500);
+    if (!this.moveInterval) {
+      this.moveInterval = setInterval(() => {
+        this.snakeService.moveSnake();
+      }, 1000);
+    }
   }
 
   onPauseGameClick() {
-    console.log('stopping timeout: ', this.moveInterval);
     clearInterval(this.moveInterval);
+    this.moveInterval = undefined;
   }
 
   onAddClick() {
