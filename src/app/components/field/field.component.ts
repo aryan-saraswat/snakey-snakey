@@ -31,19 +31,22 @@ export class FieldComponent implements OnInit, OnDestroy {
   }
 
   handleDirectionChange(pressedKey: string) {
-    let nextDirection = this.snakeService.getDirection().value;
+    let currentDirection = this.snakeService.getDirection().value;
+    let nextDirection = currentDirection;
     switch (pressedKey) {
       case 'ArrowLeft':
-        nextDirection = Direction.LEFT;
+        if (currentDirection !== Direction.RIGHT)
+          nextDirection = Direction.LEFT;
         break;
       case 'ArrowRight':
-        nextDirection = Direction.RIGHT;
+        if (currentDirection !== Direction.LEFT)
+          nextDirection = Direction.RIGHT;
         break;
       case 'ArrowUp':
-        nextDirection = Direction.UP;
+        if (currentDirection !== Direction.DOWN) nextDirection = Direction.UP;
         break;
       case 'ArrowDown':
-        nextDirection = Direction.DOWN;
+        if (currentDirection !== Direction.UP) nextDirection = Direction.DOWN;
         break;
       default:
         console.log('going nowhere');
